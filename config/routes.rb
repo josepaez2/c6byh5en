@@ -1,6 +1,25 @@
 Rails.application.routes.draw do
-  resources :products
-get "api/v1/products" => 'products#api'
+# get "api/v1/products" => 'products#api'
+
+# opción 1
+  namespace :api do 
+    namespace :v1 do
+      resources :products
+      # get "products", to: 'products#api'
+    end
+  end
+# # opción 2
+#   namespace :api, shallow: true do 
+#     namespace :v1, shallow: true do
+#       resources :products
+#       # get "products", to: 'products#api'
+#     end
+#   end
+# # opción 3
+# resources :products, path: '/api/v1'
+
+
+# app/controllers/orders/cancellations_contoller.rb
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
