@@ -3,18 +3,10 @@
 class Api::V1::ProductsController < ApplicationController
   def index
     @products = Product.all
-    @products.to_json
-  end
-  def api
-    @products = Product.all
-    # respond_to do |format|
-    #     format.html { render :api}
-    #     format.json { render :api}
-    # end
-    return @products.to_json
+    render json: @products
   end
   def show
-    redirect_to products_path
+    redirect_to api_v1_products_path
   end
   def new
     @product = Product.new

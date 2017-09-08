@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :products
     end
-  end
+  end  
 # # opción 2
 #   namespace :api, shallow: true do 
 #     namespace :v1, shallow: true do
