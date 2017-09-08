@@ -2,10 +2,9 @@ Rails.application.routes.draw do
 # get "api/v1/products" => 'products#api'
 
 # opción 1
-  namespace :api do 
+  namespace :api, defaults: { format: :json } do 
     namespace :v1 do
       resources :products
-      # get "products", to: 'products#api'
     end
   end
 # # opción 2
