@@ -22,8 +22,12 @@ skip_before_action :verify_authenticity_token
 
   def create
     # params es   Parameters: {"name"=>"Producto 3", "price"=>39, "product"=>{"name"=>"Producto 3", "price"=>39}}
-    @product = Product.create(product_params)
-    render json: @product, :status => 201
+    @product = Product.new(product_params)
+    if @product.save
+      render json: @product, :status => 201
+    else 
+      render json: @product.errors.full_messages, :status => 422
+    end
   end
 
   def edit
