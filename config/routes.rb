@@ -7,6 +7,10 @@ Rails.application.routes.draw do
       resources :products
     end
   end  
+post "api/v1/products" => 'products#create'
+
+
+
 # # opción 2
 #   namespace :api, shallow: true do 
 #     namespace :v1, shallow: true do

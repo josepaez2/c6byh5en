@@ -1,10 +1,18 @@
-# require 'json'
+require 'httparty'
 
 class Api::V1::ProductsController < ApplicationController
+
+
+skip_before_action :verify_authenticity_token
+
   def index
     @products = Product.all
     render json: @products
+    # revisando en la pantalla del servidor si está 
+    # creando los productos y rails c irb confirma
+    # HTTParty.post('http://localhost:3000/api/v1/products', body: { name: "Producto 3", price: 39}.to_json, headers: { 'Content-Type' => 'application/json' })
   end
+
   def show
     redirect_to api_v1_products_path
   end
@@ -13,7 +21,9 @@ class Api::V1::ProductsController < ApplicationController
   end
 
   def create
+    # params es   Parameters: {"name"=>"Producto 3", "price"=>39, "product"=>{"name"=>"Producto 3", "price"=>39}}
     @product = Product.create(product_params)
+    render json: @product, :status => 201
   end
 
   def edit
