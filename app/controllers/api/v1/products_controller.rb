@@ -4,14 +4,18 @@ class Api::V1::ProductsController < ApplicationController
 
 
 skip_before_action :verify_authenticity_token
-
+# protect_from_forgery with: :null_session
   def index
     # @products = Product.all
     # render json: @products
     # revisando en la pantalla del servidor si está 
     # creando los productos y rails c irb confirma
     # HTTParty.post('http://localhost:3000/api/v1/products', body: { name: "Producto 3", price: 39}.to_json, headers: { 'Content-Type' => 'application/json' })
-    HTTParty.post('http://localhost:3000/api/v1/products', body: {price: 39}.to_json, headers: { 'Content-Type' => 'application/json' })
+    # HTTParty.post('http://localhost:3000/api/v1/products', body: {price: 39}.to_json, headers: { 'Content-Type' => 'application/json' })
+    #     @product = Product.find()
+    HTTParty.patch('http://localhost:3000/api/v1/products/5', body: {name: "Yeah!", price: 10000}.to_json, headers: { 'Content-Type' => 'application/json' })
+        # @product = Product.find(params[:id])
+    # HTTParty.delete('http://localhost:3000/api/v1/products/6', body: {}.to_json, headers: { 'Content-Type' => 'application/json' })
   end
 
   def show
@@ -36,7 +40,18 @@ skip_before_action :verify_authenticity_token
   end
 
   def update
-    @product = Product.update(params[:id], product_params)
+    if @product = Product.update(params[:id], product_params)
+    # if @product.save
+      render json: @product, :status => 200
+    else 
+      render json: @product.errors.full_messages, :status => 422
+    end
+  end
+
+  def destroy
+    @product = Product.find(params[:id])
+    @product.destroy
+    {:status => 204}
   end
 
   private
