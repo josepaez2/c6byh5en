@@ -40,7 +40,8 @@ skip_before_action :verify_authenticity_token
   end
 
   def update
-    if @product = Product.update(params[:id], product_params)
+    @product = Product.find(params[:id])
+    if @product.update(product_params)
     # if @product.save
       render json: @product, :status => 200
     else 
